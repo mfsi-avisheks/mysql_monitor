@@ -4,7 +4,11 @@ $(document).ready(function(){
         $.ajax({
           url: 'ajax/cpu.php', 
           success: function(data) {
-            $(".cpu>span").html(data+"%");
+	    if(data){
+		var arr=data.split("-");
+              	$("#cpuu").html(arr[0]+"%");
+              	$("#memu").html(arr[1]+"%"); 	      
+            }
           },
           complete: function() {
             // Schedule the next request when the current one's complete

@@ -10,7 +10,11 @@
         </center>
         <div>
             <input type='button' value='Refresh List' class='refresh' id='refresh'>
-            <div class="cpu">MySQL CPU Usage:<span></span></div>            
+            <div class="cpu">
+                <p><b>MySQL Usage</b></p>
+                <label>CPU:</label><span id="cpuu"></span>,
+                <label>Memory:</label><span id="memu"></span>
+            </div>            
         </div>
         <?php
         require_once('config.php');

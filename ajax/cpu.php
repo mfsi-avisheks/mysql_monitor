@@ -4,4 +4,4 @@
     //echo "<pre>";print_r($cpu);
     $c=preg_replace('/\s+/', ' ',$cpu[7]);
     $c=explode(" ",trim($c));
-    echo $c[8];
+    echo $c[8]."-".$c[9]; //%CPU - %MEM

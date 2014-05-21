@@ -4,11 +4,15 @@ $(document).ready(function(){
         $.ajax({
           url: 'ajax/cpu.php', 
           success: function(data) {
-            $(".cpu>span").html(data+"%");
+	    if(data){
+		split(data);
+              	$(".cpu>span#cpuu").html(data+"%");
+              	$(".cpu>span#memu").html(data+"%"); 	      
+            }
           },
           complete: function() {
             // Schedule the next request when the current one's complete
-            setTimeout(worker, 1000);
+            setTimeout(worker, 100000);
           }
         });
     })();
