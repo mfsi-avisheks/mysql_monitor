@@ -1,0 +1,56 @@
+$(document).ready(function(){
+    
+    (function worker() {
+        $.ajax({
+          url: 'ajax/cpu.php', 
+          success: function(data) {
+            $(".cpu>span").html(data+"%");
+          },
+          complete: function() {
+            // Schedule the next request when the current one's complete
+            setTimeout(worker, 1000);
+          }
+        });
+    })();
+    
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    $("#"+getParameterByName("id")).attr('ordering',getParameterByName('order'));
+    $(".ordering").click(function(){
+        var oo=parseInt($(this).attr('ordering'));                
+        oo=(oo)?0:1;
+        window.location.href = "index.php?id="+$(this).attr('id')+'&order='+oo;
+    });
+
+    $("#refresh").click(function(){location.reload(true);});
+
+    $(".kill").bind('click',function(){
+        if(confirm("Are you sure you want to Kill the process?")){
+            var pid=$(this).attr("id");
+            var ds="id="+pid;
+            var url="ajax/kill.php";
+            $.ajax({  
+                type: "POST",  
+                url: url,  
+                data: ds, 
+                success: function(response){
+                    if(response=="ok"){
+                        alert("Process-id "+pid+" has been killed successfully. Click OK to refresh the page.");                                
+                    }else{
+                        alert('cannot kill process='+pid);
+                    }
+                    location.reload(true);
+                },  
+                error: function(response) {
+                    alert('ajax response error');
+                }
+            });
+        }    
+    });
+
+});
